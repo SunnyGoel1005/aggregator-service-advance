@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: aggregator-service-deplyoment
+  name: aggregator-service-deplyoment-config
+  namespace: default
+data:
+  AGGREGATOR_PORT: "3002"
+  ORDER_URL: http://orderservice-deployment-service
+  USER_URL: http://userservice-deployment-service

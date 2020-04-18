@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: aggregatorservice
+  name: aggregatorservice-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: aggregatorservice-deployment
+  template:
+    metadata:
+      labels:
+        app: aggregatorservice-deployment
+    spec:
+      containers:
+      - env:
+        - name: USER_URL
+          valueFrom:
+            configMapKeyRef:
+              key: USER_URL
+              name: aggregator-service-deplyoment-config
+        - name: ORDER_URL
+          valueFrom:
+            configMapKeyRef:
+              key: ORDER_URL
+              name: aggregator-service-deplyoment-config
+        - name: AGGREGATOR_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: AGGREGATOR_PORT
+              name: aggregator-service-deplyoment-config
+        image: sunnygoel1005/aggregatorservice:aggregatorupdated
+        imagePullPolicy: IfNotPresent
+        name: aggregatorservice-1
+      imagePullSecrets:
+        - name: registry-secret
